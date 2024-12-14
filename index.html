@@ -1,0 +1,613 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Sitesi</title>
+    <style>
+	/* Genel Gövde Stilleri */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #EAD8B1; /* Yeni arka plan rengi */
+    color: #001F3F; /* Metin için ana renk */
+}
+
+/* Başlık Tasarımı */
+.header {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px 0;
+    color: #001F3F; /* Başlık metni rengi */
+    margin-bottom: 10px;
+}
+
+/* Sayfa Düzeni */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: calc(100vh - 70px);
+    margin: 0 auto;
+    width: 100%;
+    flex-wrap: wrap; /* Çoklu satır için sarma özelliği */
+    padding: 2px; /* Dış boşluk ekleyerek düzeni rahatlat */
+    gap: 5px; /* Elemanlar arasında boşluk */
+}
+/* Sayfa Düzeni */
+.innercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: calc(100vh - 70px);
+    margin: 1%;
+    width: 100%;
+    flex-wrap: wrap; /* Çoklu satır için sarma özelliği */
+    padding: 2px; /* Dış boşluk ekleyerek düzeni rahatlat */
+    gap: 5px; /* Elemanlar arasında boşluk */
+}
+/* Sidebar (Butonlar) */
+.sidebar {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.sidebar-button {
+    background-color: #3A6D8C; /* Buton arka planı */
+    color: #EAD8B1; /* Buton metin rengi */
+    border: 1px solid #6A9AB0; /* Buton kenar rengi */
+    border-radius: 8px;
+    font-size: 14px;
+   
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 90%; /* Sabit genişlik yerine yüzdeye göre esneyen bir yapı */
+    max-width: 150px; /* Butonun maksimum genişliği */
+    height: auto; /* Yüksekliği içeriğe göre ayarla */
+    padding: 2px 3px; /* Buton iç dolgusunu arttır */
+    text-align: center; /* Metni ortala */
+    font-size: 1rem; /* Daha okunaklı bir yazı boyutu */
+}
+
+    .sidebar-button:hover {
+        background-color: #6A9AB0; /* Hover durumunda arka plan rengi */
+        color: #001F3F; /* Hover durumunda metin rengi */
+    }
+
+/* İçerik Alanı */
+.content {
+    flex: 1;
+    width: 70%;
+    padding: 20px;
+    background-color: #6A9AB0; /* İçerik alanı arka planı */
+    border: 1px solid #3A6D8C; /* İçerik alanı kenar rengi */
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    margin: 0 10px;
+}
+
+    .content h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #EAD8B1; /* Başlık metni rengi */
+    }
+
+    .content p {
+        margin-top: 10px;
+        font-size: 16px;
+        color: #EAD8B1; /* Paragraf metni rengi */
+        text-indent: 20px;
+    }
+
+/* Fotoğraf ve Yazı Yatay Düzen */
+.content-image-text {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.content-image {
+    width: 40%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.content-text {
+    width: 30%;
+}
+
+/* Slider Alanı */
+.slider {
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+    .slider img {
+        width: 100%; /* Tüm slider genişliğine yayıl */
+        height: auto; /* Yüksekliği orana göre ayarla */
+        object-fit: cover; /* Görseli kırpmadan kutuya sığdır */
+    }
+.slides {
+    display: flex;
+    transition: transform 1s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+    .slide img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+.slider-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.slider-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #EAD8B1;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+    .slider-button:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+/* Slider Indicator Dots */
+.slider-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .dot.active {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+.divkutu {
+    width: 100%;
+    padding: 5%;
+    justify-content: center;
+    display: flex;
+}
+@media (max-width: 768px) {
+    .sidebar {
+        flex-direction: row;
+        flex-wrap: wrap; /* Çok satırlı düzen */
+        gap: 5px;
+        justify-content: space-around;
+    }
+
+    .sidebar-button {
+        width: 100%; /* Butonları yan yana iki sütun halinde düzenle */
+        max-width: unset;
+        font-size: 0.9rem;
+    }
+
+    .content {
+        width: 95%; /* İçerik alanını daralt */
+        margin: 10px auto; /* Ortala */
+    }
+
+    .slider img {
+        max-height: 300px; /* Resim yüksekliğini sınırlı tut */
+    }
+}
+
+	</style>
+</head>
+<body>
+    
+    <div class="divkutu">
+    <div class="innercontainer">
+        <!-- Sol Sidebar -->
+        <div class="sidebar left">
+            <button class="sidebar-button" data-content1="content1">Su Kabağı Hakkında Genel Bilgiler</button>
+            <button class="sidebar-button" data-content2="content2">Su kabağının özellikleri ve faydaları</button>
+            <button class="sidebar-button" data-content3="content3">Su kabağı işlemeciliği nedir</button>
+            <button class="sidebar-button" data-content4="content4">Su Kabağı İşlerinin Kullanılan Teknikler Ve Malzemeler</button>
+        </div>
+
+        <!-- İçerik Alanı -->
+        <div class="content" id="main-content">
+            <h1>Su Kabagı Yankısı</h1>
+            <p>Buraya içerik geliyor.</p>
+            <!-- Slider Alanı -->
+            <div class="slider">
+                <div class="slides">
+                    <div class="slide">
+                        <img style="height:500px; widht:850px;" src="~/img/slider/1/k1.jpg" alt="Slide 1">
+                    </div>
+                    <div class="slide">
+                        <img style="height:500px; widht:850px;" src="~/img/slider/1/k2.jpg" alt="Slide 2">
+                    </div>
+                    <div class="slide">
+                        <img style="height:500px; widht:850px;" src="~/img/slider/1/k3.jpg" alt="Slide 3">
+                    </div>
+                    <div class="slide">
+                        <img style="height:500px; widht:850px;" src="~/img/slider/1/k4.jpg" alt="Slide 4">
+                    </div>
+                    <div class="slide">
+                        <img style="height:500px; widht:850px;" src="~/img/slider/1/k5.jpg" alt="Slide 5">
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-button" id="prev">&#10094;</button>
+                    <button class="slider-button" id="next">&#10095;</button>
+                </div>
+                <div class="slider-dots">
+                    <div class="dot" data-index="0"></div>
+                    <div class="dot" data-index="1"></div>
+                    <div class="dot" data-index="2"></div>
+                    <div class="dot" data-index="3"></div>
+                    <div class="dot" data-index="4"></div>
+                </div>
+            </div>
+            <!--slider alanı son -->
+        </div>
+
+        <!-- Sağ Sidebar -->
+        <div class="sidebar right">
+            <button class="sidebar-button" data-content="content5">Su Kabağı Boyama Yöntemleri</button>
+            <button class="sidebar-button" data-content="content6">Su Kabağının Kullanım Alanları</button>
+            <button class="sidebar-button" data-content="content7">Kaynakça Su Kabağı</button>
+            <button class="sidebar-button" data-content="content8"> Ayarlanacak</button>
+        </div>
+    </div>
+    </div>
+    <script>
+        const contents = {
+            content1: {
+                title: "Su Kabağı Hakkında Genel Bilgiler",
+                text: "<p>Su kabağı , kabakgiller  familyasından tek yıllık bir bitkidir. Sarılıcı bir bitki olduğu için, asma kabağı olarak da bilinir. Çeşitli şekil ve boyda olan türleri vardır. Genellikle sapı dar, alt kısmı şişmandır.<br><p>Eskiden süs amaçlı olarak ya da içi boşaltılarak su kabı olarak kullanılırdı - ki bu son kullanımından dolayı bitki, su kabağı şeklinde adlandırılmıştır.Bunun yanı sıra baş tarafından dip tarafına doğru ortadan ikiye kesilip, sap ve kapak ilave edilerek saz yapımında da kullanıldığı görülmektedir.Günümüzde kabak lamba, süs eşyası ve heykel yapımında kullanılmaktadır.Ayrıca genellikle süs amaçlı kullanılan bir bitki olmasına karşın; bazı yörelerde yemeği de yapılmaktadır.",
+                image1: "/img/slider/2/1.jpg",
+                image2: "/img/slider/2/2.jpg",
+                image3: "/img/slider/2/3.jpg",
+                image4: "/img/slider/2/4.jpg",
+                image5: "/img/slider/2/5.jpg",
+                image6: "/img/slider/2/6.jpg",
+                text2: "<p>Kabakların içi tuzlu su ve çakıl ile temizlenir. Bu noktada zaman içerisinde içme suyunun depolanması için de su kabakları kullanılmıştır. Günümüzde su kabakları farklı bölgelerde yetiştirilerek süslenmektedir. Bu doğrultuda su kabağı, yörelere göre farklı isimlerle adlandırılmaktadır. Kernep, Gocer, Keşgül, Kantar kabağı, Testi Kabağı, Ficiko gibi isimler su kabaklarına verilen isimler arasında yer almaktadır. Eski dönemlerde su kabı ve saklama kabı görevini gören su kabakları günümüzde ise yoğun bir şekilde süsleme sanatında kullanılmaktadır.",
+                image7: "/img/slider/2/8.jpg",
+                title2: "Su Kabağı Nasıl Ekilir?",
+                text3: "<p>Tohumları çimlendirmek için torf (bitki toprağı) ile doldurulan kaplarınıza (Köpük/plastik viyol, saksı, plastik/kağıt bardak vs) sivri kısmı aşağı gelecek şekilde fazla derine inmeden tohumu ekin ve can suyu verin. Bir tohum boyu derinlik 1-2 cm yeterlidir, daha derine inildiğinde ürün geç çıkar veya çıkmayabilir. ohumlar soğuk olmayan ortamda günlük fıs fıs ile sulanarak bekletilir ve 10-15 günlük süreç içerisinde yavaş yavaş filizlenmeye başlar.<br><p>Fideler yaklaşık 15-20 cm olduktan sonra (4-6 yaprak olunca) en az 1 metre ara ile asıl yerine dikiniz. Beklenen kötü hava şartları var ise kalıcı yere aktarımı geciktirebilirsiniz.<br><p>Yaklaşık 1 metre boylarına kadar ulaşan su kabağı bitkisi asma/askı sisteminden sarkıtılan iplere sardırılarak yukarı yönlü hareket etmesi sağlanır. Tüm köklerin yukarı yönlü hareket etmesi için bu işlem belirli aralıklarla kontrol edilerek tekrarlanır. Tüm su kabakları yukarı yönlü hareket ederek asma sisteminin üzerine doğru hareket etmektedir. Su kabaklarında dişi ve erkek çiçekler oluşmaktadır. Açan çiçeklerin büyük bir bölümü erkek çiçektir. Farklı canlıların (arı,karınca,kuş vb.) yardımı ile tozlaşma olur ve dişi çiçeklerde sebze oluşumu başlar.<br><p>Büyümeye devam eden su kabaklarının yaprakları sürekli kontrol edilir. Yapraklarda bozulmalar, lekelenmeler oluştuğunda hastalığın türü tespit edilerek geç kalınmadan müdahale edilmelidir. Yetişme döneminden hasada kadar kırmızı örümcek, yaprak biti ve külleme gibi hastalıklar görülebilir.<br><p>Sapları ve kök kısmı kuruyan su kabakları artık toplanabilir. Su kabakları sonbahar mevsiminde gece don olayı yaşandığı günlerden önce toplanması gerekir."
+            },
+            content2: {
+                text: "<p>Su kabağı, yaz aylarının ferahlatıcı ve besleyici sebzelerinden biridir. Düşük kalori ve yüksek su içeriği ile sağlıklı beslenmeye katkı sağlar. Lif, vitamin ve mineral açısından zengin olan su kabağı, sindirim, hidrasyon ve kalp sağlığına faydalarıyla dikkat çeker.",
+                title: "Su Kabakları: Özellikleri ve Faydaları Nelerdir?",
+                image1: "/img/slider/3/1.jpg",
+                image2: "/img/slider/3/2.jpg",
+                image3: "/img/slider/3/3.jpg",
+                image4: "/img/slider/3/4.jpg",
+                text2: "<p>Su kabağı, özellikle yaz aylarında popülaritesi artan, besleyici ve çok yönlü bir sebzedir. Bu makalede, su kabağının özelliklerini, besin değerlerini ve sağlık üzerindeki faydalarını detaylı bir şekilde ele alacağız.<br><p>Su kabağı, Cucurbita pepo türüne ait bir bitkidir ve genellikle sıcak iklimlerde yetişir. Genellikle yeşil, sarı veya beyaz renkte olup, yassı veya yuvarlak bir şekle sahip olabilir. Su kabağının dış kabuğu sert, iç kısmı ise yumuşak ve sulu bir yapıya sahiptir.<br>-->Su kabağı, yüksek su içeriği sayesinde ferahlatıcı bir sebzedir.<br>-->Kalori oranı düşüktür, bu nedenle diyetlerde sıkça tercih edilir.<br>-->İçeriğinde bol miktarda lif, vitamin ve mineral bulunur.",
+                title2: "<br>Besin Değerleri",
+                text3: "<p>Su kabağının besin değerleri, onu sağlıklı bir diyetin vazgeçilmez bir parçası haline getirir. Bu sebzenin 100 gramında yaklaşık olarak şu değerler bulunmaktadır:<br>Kalori: 16 kcal<br>Karbonhidrat: 3.2 g<br>Protein: 0.6 g<br>Yağ: 0.1 g<br>Lif: 0.5 g<br>Vitamin C: %10 günlük ihtiyacı karşılar<br>Potasyum: 261 mg<br>Bu besin değerleri, su kabağını özellikle kilo kontrolü yapan bireyler için ideal bir seçenek haline getirir.",
+                title3: "Sağlık Faydaları",
+                text4: "<p>Su kabaklarının sağlık üzerindeki faydaları oldukça fazladır. İşte bazıları:Sindirim Sistemi Sağlığı: Su kabağındaki lif, sindirim sisteminin düzgün çalışmasına yardımcı olur ve kabızlık sorunlarını önler.<br><b>Hidrasyon:</b> Yüksek su içeriği sayesinde vücudun su ihtiyacını karşılar ve hidrasyonu artırır.<br><b>Antioksidan Özellikler:</b> Su kabağında bulunan vitamin C ve diğer bileşikler, vücudu serbest radikallerin zararlarından korur.<br><b>Kardiyovasküler Sağlık:</b> Potasyum içeriği, kan basıncını düzenlemeye yardımcı olabilir, böylece kalp sağlığını destekler.<br><b>Ağız Sağlığı:</b> Su kabağının lif içeriği, diş sağlığını destekler ve ağızda plak oluşumunu azaltabilir.<br><p>Su kabağı, besleyici özellikleri ve sağlık faydaları ile dikkat çeken bir sebzedir. Düşük kalori ve yüksek su içeriği sayesinde özellikle yaz aylarında serinletici bir atıştırmalık olarak tercih edilebilir. Sağlıklı bir yaşam tarzı için su kabağının diyetinize dahil edilmesi önerilir. Bu sebzenin çeşitli yemeklerde kullanılması, hem lezzet hem de besin değeri açısından önemli faydalar sağlayacaktır."
+            },
+            content3: {
+                text: "<p>Çağlar boyunca işlevsel olarak kullanılan su kabakları; kimi zaman balıkçıların ağ şamandırası olmuş, kimi zaman bir evin mutfağında tuz kabı, patates-soğan sepeti olarak kullanılmıştır. Anadolu insanı büyük su kabaklarına yoğurt mayalamışlar, su taşımışlardır. Geçmiş yıllarda köylerde çamaşırlar su kabaklarından yapılan taslarla su dökülerek yıkanmıştır.",
+                title: "Su Kabağı İşlemeciliği",
+                text2: "<p>Ülkemizde günlük yaşamda aşağı-yukarı bu şekilde kullanılırken; 1970 li yıllarda işin içine estetik boyutu girmiş ve su kabakları abajur, avize, mumluk, kuş evi, saksı, oyuncak, takı, heykel gibi sayısız nesneye dönüşmüştür. Geçmişi çok eskilere dayanan su kabaklarının ve su kabakları ile yapılan sanatın yok olmaması için, bu sanat dalını korumamız, kültürel değerlerimiz ve geleceğimiz, aynı zamanda turizm açısından son derece önemli olmakla birlikte, bu sanatın yurt içinde ve dışında tanıtılması ve geliştirilmesi önemlidir.",
+                image1: "/img/slider/4/1.jpg",
+                image2: "/img/slider/4/2.jpg",
+                image3: "/img/slider/4/3.jpg",
+                image4: "/img/slider/4/4.jpg",
+                image5: "/img/slider/4/5.jpg",
+                image6: "/img/slider/4/6.jpg",
+                image7: "/img/slider/4/7.jpg",
+                image8: "/img/slider/4/8.jpg"
+            },
+            content4: {
+                text: "<p>Bu işin teknik türleri vardır: Delme tekniği (milimlerle delip şekil vermek), boncuklama tekniği, oyma tekniği (belirli kısımları çıkartarak şekil vermek), inceltme tekniği (kabağı temizledikten sonra kabağın özelliğine göre 2 milimden 1 santime kadar bir kalınlığı kalır bu kalınlığın belirli bir kısmını elmas ya da aşındırıcı uçlarla komple delmeden bir inceltme yapılır), kumlama tekniği (1 milimlik renkli kumlarla oyma yapılır desenlerine yapıştırılır), yakma tekniği (bir silüeti yakmayı ahşaba yaptığımız gibi kabağa da uygularız), boyama tekniği (değişik akrilik boyalarla yapılan ürünler de vardır.).",
+                title: "SU KABAĞI İŞLERKEN KULLANILAN TEKNİKLER VE MALZEMELER NELERDİR?",
+                text2: "<p>Öncelikle içini temizlemek için şarjlı matkap kullanılır, şarjlı matkaba takılı uzun aparatımız ve tel fırçalarımız var. Sonrasında çizim için cetvel, pergel, metre gibi ölçü malzemelerini kullanıyoruz. Devamında delme işlemini yapmak için adı dremel olan el hobi matkabı ve matkaba eklenen farklı milimlerde delme ve inceltme uçları gibi uçlarla su kabağını şekillendiriyoruz. Su kabaklarının üzerindeki şekilleri elle de çizebiliriz, transfer yöntemi ve bilgisayar çıktısı aldığımız bir deseni üzerine yapıştırıp onun üzerinde de işleyebiliyoruz.",
+                
+                
+            }
+        };
+
+        const buttons = document.querySelectorAll('.sidebar-button');
+        const mainContent = document.getElementById('main-content');
+        let slides, slide, prev, next, index, dots;
+
+        let autoSlideInterval; // setInterval referansı
+
+        function initializeSlider() {
+            slides = document.querySelector('.slides');
+            slide = document.querySelectorAll('.slide');
+            prev = document.getElementById('prev');
+            next = document.getElementById('next');
+            dots = document.querySelectorAll('.dot');
+            index = 0;
+
+            prev.addEventListener('click', () => {
+                index = (index > 0) ? index - 1 : slide.length - 1;
+                updateSlider();
+            });
+
+            next.addEventListener('click', () => {
+                index = (index < slide.length - 1) ? index + 1 : 0;
+                updateSlider();
+            });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', (e) => {
+                    index = parseInt(e.target.getAttribute('data-index'));
+                    updateSlider();
+                });
+            });
+
+            // Otomatik ilerleme
+            autoSlideInterval = setInterval(() => {
+                index = (index < slide.length - 1) ? index + 1 : 0;
+                updateSlider();
+            }, 10000); // Her 10 saniyede ilerle
+
+            // Otomatik ilerlemeyi resetlemek için eventListener ekleyin
+            [prev, next].forEach(button => {
+                button.addEventListener('click', () => {
+                    clearInterval(autoSlideInterval); // Otomatik ilerlemeyi durdur
+                    autoSlideInterval = setInterval(() => { // Tekrar başlat
+                        index = (index < slide.length - 1) ? index + 1 : 0;
+                        updateSlider();
+                    }, 10000);
+                });
+            });
+        }
+
+        function updateSlider() {
+            const slideWidth = slide[0].clientWidth;
+            slides.style.transform = `translateX(${-index * slideWidth}px)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const contentKey = button.getAttribute('data-content1');
+                const content = contents[contentKey];
+                if (content) {
+                    mainContent.innerHTML = `
+                                        <h1>${content.title}</h1>
+                                        <p>${content.text}</p>
+                            <div class="slider">
+                                <div class="slides">
+                                    <div class="slide">
+                                                <img style="height:500px; widht:850px;"src="${content.image1}" alt="Slide 1">
+                                    </div>
+                                    <div class="slide">
+                                                <img style="height:500px; widht:850px;" src="${content.image2}" alt="Slide 2">
+                                    </div>
+                                    <div class="slide">
+                                                <img style="height:500px; widht:850px;" src="${content.image3}" alt="Slide 3">
+                                    </div>
+                                    <div class="slide">
+                                                <img style="height:500px; widht:850px;" src="${content.image4}" alt="Slide 4">
+                                    </div>
+                                    <div class="slide">
+                                                <img style="height:500px; widht:850px;" src="${content.image5}" alt="Slide 5">
+                                    </div>
+                                    <div class="slide">
+                                                <img style="height:500px; widht:850px;" src="${content.image6}" alt="Slide 6">
+                                    </div>
+                                </div>
+                                <div class="slider-controls">
+                                    <button class="slider-button" id="prev">&#10094;</button>
+                                    <button class="slider-button" id="next">&#10095;</button>
+                                </div>
+                                <div class="slider-dots">
+                                    <div class="dot" data-index="0"></div>
+                                    <div class="dot" data-index="1"></div>
+                                    <div class="dot" data-index="2"></div>
+                                    <div class="dot" data-index="3"></div>
+                                    <div class="dot" data-index="4"></div>
+                                    <div class="dot" data-index="5"></div>
+                                </div>
+                            </div>
+                            <!--fotograf koydum dikkat et sakın ayarını bozma!!!-->
+                                <div class="content-image-text">
+                                     <img src="${content.image7}" class="content-image">
+                                     <div class="content-text">
+                                     <p>${content.text2}</p>
+                                     </div>
+                                </div>
+                                <!--foto bölüm son-->
+                                        <h1>${content.title2}</h1>
+                                                <p>${content.text3}</p>
+                                    `;
+                    initializeSlider();
+                }
+            });
+        });
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const contentKey = button.getAttribute('data-content2');
+                const content = contents[contentKey];
+                if (content) {
+                    mainContent.innerHTML = `
+                                                <p>${content.text}</p>
+                                                <h1>${content.title}</h1>
+                                                <p>${content.text2}</p>
+                                    <div class="slider">
+                                                <div class="slides">
+                                     <div class="slide">
+                                                 <img style="height:500px; widht:850px;"src="${content.image1}" alt="Slide 1">
+                                     </div>
+                                     <div class="slide">
+                                                 <img style="height:500px; widht:850px;" src="${content.image2}" alt="Slide 2">
+                                     </div>
+                                     <div class="slide">
+                                                 <img style="height:500px; widht:850px;" src="${content.image3}" alt="Slide 3">
+                                     </div>
+                                     <div class="slide">
+                                                 <img style="height:500px; widht:850px;" src="${content.image4}" alt="Slide 4">
+                                     </div>
+                                     </div>
+                                     <div class="slider-controls">
+                                     <button class="slider-button" id="prev">&#10094;</button>
+                                     <button class="slider-button" id="next">&#10095;</button>
+                                      </div>
+                                      <div class="slider-dots">
+                                     <div class="dot" data-index="0"></div>
+                                     <div class="dot" data-index="1"></div>
+                                     <div class="dot" data-index="2"></div>
+                                     <div class="dot" data-index="3"></div>
+                                      </div>
+                                    </div>
+                                    <h1>${content.title2}</h1>
+                                    <p>${content.text3}</p>
+                                    <h1>${content.title3}</h1>
+                                    <p>${content.text4}</p>
+                                            `;
+                    initializeSlider();
+                }
+            });
+        });
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const contentKey = button.getAttribute('data-content3');
+                const content = contents[contentKey];
+                if (content) {
+                    mainContent.innerHTML = `
+                                                        <h1>${content.title}</h1>
+                                                        <p>${content.text}</p>
+                                                        <p>${content.text2}</p>
+                                            <div class="slider">
+                                                        <div class="slides">
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;"src="${content.image1}" alt="Slide 1">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image2}" alt="Slide 2">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image3}" alt="Slide 3">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image4}" alt="Slide 4">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image5}" alt="Slide 5">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image6}" alt="Slide 6">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image7}" alt="Slide 7">
+                                                     </div>
+                                                     <div class="slide">
+                                                                 <img style="height:500px; widht:850px;" src="${content.image8}" alt="Slide 8">
+                                                     </div>
+                                                 </div>
+                                                 <div class="slider-controls">
+                                                     <button class="slider-button" id="prev">&#10094;</button>
+                                                     <button class="slider-button" id="next">&#10095;</button>
+                                                 </div>
+                                                 <div class="slider-dots">
+                                                     <div class="dot" data-index="0"></div>
+                                                     <div class="dot" data-index="1"></div>
+                                                     <div class="dot" data-index="2"></div>
+                                                     <div class="dot" data-index="3"></div>
+                                                     <div class="dot" data-index="4"></div>
+                                                     <div class="dot" data-index="5"></div>
+                                                     <div class="dot" data-index="6"></div>
+                                                     <div class="dot" data-index="7"></div>
+
+                                                 </div>
+                                            </div>
+                                                    `;
+                    initializeSlider();
+                }
+            });
+        });
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const contentKey = button.getAttribute('data-content4');
+                const content = contents[contentKey];
+                if (content) {
+                    mainContent.innerHTML = `
+                                                                <h1>${content.title}</h1>
+                                                                <p>${content.text}</p>
+                                                                <p>${content.text2}</p>
+                                                    <div class="slider">
+                                                                <div class="slides">
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;"src="${content.image1}" alt="Slide 1">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image2}" alt="Slide 2">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image3}" alt="Slide 3">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image4}" alt="Slide 4">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image5}" alt="Slide 5">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image6}" alt="Slide 6">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image7}" alt="Slide 7">
+                                                             </div>
+                                                             <div class="slide">
+                                                                         <img style="height:500px; widht:850px;" src="${content.image8}" alt="Slide 8">
+                                                             </div>
+                                                         </div>
+                                                         <div class="slider-controls">
+                                                             <button class="slider-button" id="prev">&#10094;</button>
+                                                             <button class="slider-button" id="next">&#10095;</button>
+                                                         </div>
+                                                         <div class="slider-dots">
+                                                             <div class="dot" data-index="0"></div>
+                                                             <div class="dot" data-index="1"></div>
+                                                             <div class="dot" data-index="2"></div>
+                                                             <div class="dot" data-index="3"></div>
+                                                             <div class="dot" data-index="4"></div>
+                                                             <div class="dot" data-index="5"></div>
+                                                             <div class="dot" data-index="6"></div>
+                                                             <div class="dot" data-index="7"></div>
+
+                                                         </div>
+                                                    </div>
+                                                    
+                                                            `;
+                    initializeSlider();
+                }
+            });
+        });
+        initializeSlider();
+    </script>
+</body>
